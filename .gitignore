@@ -1,0 +1,17 @@
+api/bdMsqlAsignatura.php
+api/bdMsqlProfe.php
+api/bdMsqlRol.php
+api/bdMsqlTitulo.php
+api/bdPrueba.php
+api/iBD.php
+api/iBDAsignatura.php
+api/iBDProfesor.php
+api/iBDRol.php
+api/iBDTitulo.php
+api/Mysql.php
+api/titulo.php
+api/rol.php
+api/prueba.php
+api/profesor.php
+api/aula.php
+api/asignatura.php
