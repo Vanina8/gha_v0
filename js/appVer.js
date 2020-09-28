@@ -204,10 +204,36 @@ const app = new Vue({
                 return ( this.distinguido.findIndex(item => item.id === $id) !=  -1 ? true : false);
           },
           dameColorDDistinguir($id){
-
                 var x= this.distinguido[this.distinguido.findIndex(item => item.id === $id)].color;
                 return x;
           },        
+          agregaSesion($dias, $elemento){
+            if($dias==1){
+                this.lunes.push($elemento);
+            }else if($dias==2){
+                this.martes.push($elemento);
+            }else if($dias == 3){
+                this.miercoles.push($elemento);
+            }else if($dias == 4){
+                this.jueves.push($elemento);
+            }else if($dias == 5){
+                this.viernes.push($elemento);
+            }
+          },
+          agregaLibre($dias){
+            if($dias==1){
+                this.lunes.push('libre');
+            }else if($dias==2){
+                this.martes.push('libre');
+            }else if($dias == 3){
+                this.miercoles.push('libre');
+            }else if($dias == 4){
+                this.jueves.push('libre');
+            }else if($dias == 5){
+                this.viernes.push('libre');
+            }
+          },
+
           verHorario($tipo, $idX ){
 
             var fila=0;
@@ -222,45 +248,23 @@ const app = new Vue({
             this.contadorColores=0;
             
               if($tipo ==='P'){
-                        for( dias=1; dias<6; dias++){
+                for( dias=1; dias<6; dias++){
 
-                            for (indice in this.tramoshorario){
+                    for (indice in this.tramoshorario){
 
-                                elemento= this.encontradoProfe(dias, this.tramoshorario[indice].id, $idX);
+                        elemento= this.encontradoProfe(dias, this.tramoshorario[indice].id, $idX);
 
-                                if(elemento.length>0){
+                        if(elemento.length>0){
 
-                                    var $colorItem = this.revisarDistinguir(elemento[0].g_id);  // distinguirá por asignaturas
+                            var $colorItem = this.revisarDistinguir(elemento[0].g_id);  // distinguirá por asignaturas
                                     
-                                     elemento.push($colorItem);
-
-                                    if(dias==1){
-                                        this.lunes.push(elemento);
-                                    }else if(dias==2){
-                                        this.martes.push(elemento);
-                                    }else if(dias == 3){
-                                        this.miercoles.push(elemento);
-                                    }else if(dias == 4){
-                                        this.jueves.push(elemento);
-                                    }else if(dias == 5){
-                                        this.viernes.push(elemento);
-                                    }
-                                }else{
-                                    if(dias==1){
-                                        this.lunes.push('libre');
-                                    }else if(dias==2){
-                                        this.martes.push('libre');
-                                    }else if(dias == 3){
-                                        this.miercoles.push('libre');
-                                    }else if(dias == 4){
-                                        this.jueves.push('libre');
-                                    }else if(dias == 5){
-                                        this.viernes.push('libre');
-                                    }
-                                }
-
-                             }
-                          }                      
+                            elemento.push($colorItem);
+                            this.agregaSesion(dias, elemento);
+                        }else{
+                            this.agregaLibre(dias);
+                        }
+                    }
+                }                      
               }else if($tipo==='A'){
 
                 for( dias=1; dias<6; dias++){
@@ -268,36 +272,14 @@ const app = new Vue({
                   for (indice in this.tramoshorario){
 
                       elemento= this.encontradoAula(dias, this.tramoshorario[indice].id, $idX);
-                      if(elemento.length>0){
 
+                      if(elemento.length>0){
                         var $colorItem = this.revisarDistinguir(elemento[0].s_id);  // distinguirá por asignaturas                                    
                         elemento.push($colorItem);
-
-                          if(dias==1){
-                              this.lunes.push(elemento);
-                          }else if(dias==2){
-                              this.martes.push(elemento);
-                          }else if(dias == 3){
-                              this.miercoles.push(elemento);
-                          }else if(dias == 4){
-                              this.jueves.push(elemento);
-                          }else if(dias == 5){
-                              this.viernes.push(elemento);
-                          }
+                        this.agregaSesion(dias, elemento);
                       }else{
-                          if(dias==1){
-                              this.lunes.push('libre');
-                          }else if(dias==2){
-                              this.martes.push('libre');
-                          }else if(dias == 3){
-                              this.miercoles.push('libre');
-                          }else if(dias == 4){
-                              this.jueves.push('libre');
-                          }else if(dias == 5){
-                              this.viernes.push('libre');
-                          }
+                          this.agregaLibre(dias);
                       }
-
                    }
                 }
 
@@ -315,29 +297,10 @@ const app = new Vue({
                          elemento.push($colorItem);    
 
                           console.log('Encontrado el tipo: '+$tipo+' con id:'+$idX+' dia:'+dias+' tramo:'+this.tramoshorario[indice].id);
-                          if(dias==1){
-                              this.lunes.push(elemento);
-                          }else if(dias==2){
-                              this.martes.push(elemento);
-                          }else if(dias == 3){
-                              this.miercoles.push(elemento);
-                          }else if(dias == 4){
-                              this.jueves.push(elemento);
-                          }else if(dias == 5){
-                              this.viernes.push(elemento);
-                          }
+
+                          this.agregaSesion(dias, elemento);
                       }else{
-                          if(dias==1){
-                              this.lunes.push('libre');
-                          }else if(dias==2){
-                              this.martes.push('libre');
-                          }else if(dias == 3){
-                              this.miercoles.push('libre');
-                          }else if(dias == 4){
-                              this.jueves.push('libre');
-                          }else if(dias == 5){
-                              this.viernes.push('libre');
-                          }
+                          this.agregaLibre(dias);
                       }
 
                    }
@@ -354,43 +317,24 @@ const app = new Vue({
                         var $colorItem = this.revisarDistinguir(elemento[0].s_id);  // distinguirá por asignaturas                                    
                         elemento.push($colorItem);
 
-                        if(dias==1){
-                              this.lunes.push(elemento);
-                          }else if(dias==2){
-                              this.martes.push(elemento);
-                          }else if(dias == 3){
-                              this.miercoles.push(elemento);
-                          }else if(dias == 4){
-                              this.jueves.push(elemento);
-                          }else if(dias == 5){
-                              this.viernes.push(elemento);
-                          }
+                          this.agregaSesion(dias, elemento);
                       }else{
-                          if(dias==1){
-                              this.lunes.push('libre');
-                          }else if(dias==2){
-                              this.martes.push('libre');
-                          }else if(dias == 3){
-                              this.miercoles.push('libre');
-                          }else if(dias == 4){
-                              this.jueves.push('libre');
-                          }else if(dias == 5){
-                              this.viernes.push('libre');
-                          }
+                          this.agregaLibre(dias);
                       }
-
                    }
                 }
               }
-
-              var fila=[];
-              var contador=0;
-              this.matrizVer=[];
-              for ( contador=0; contador<5; contador++){
-                      fila.push(this.tramoshorario[contador], this.lunes[contador], this.martes[contador], this.miercoles[contador], this.jueves[contador], this.viernes[contador]);    
-                      this.matrizVer.push(fila);
-                      fila=[];
-              }
+              this.trasponerMatriz();
+          },
+          trasponerMatriz(){
+            var fila=[];
+            var contador=0;
+            this.matrizVer=[];
+            for ( contador=0; contador<5; contador++){
+                    fila.push(this.tramoshorario[contador], this.lunes[contador], this.martes[contador], this.miercoles[contador], this.jueves[contador], this.viernes[contador]);    
+                    this.matrizVer.push(fila);
+                    fila=[];
+            }
           }
     }
 })

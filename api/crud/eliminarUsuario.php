@@ -4,16 +4,18 @@ include '../conexion.php';
 $id = htmlentities($_GET['id']);
 $res1=true;
 $res2=true;
+$res3=true;
 
 $idrol = $con->query("SELECT id_rol FROM profesor WHERE id='$id'");
 $idrol2 = $idrol->fetch_assoc();
 
 if($idrol2['id_rol']==12){
     $res2=eliminarDTablaProAsig($con, $id);
+    $res3=eliminarDTablaSesiones($con, $id);
 }
 $res1=eliminarDTablaPro($con, $id);
 
-if($res1 && $res2){
+if($res1 && $res2 && $res3){
     echo "success";
 }else{
     echo "fail";
@@ -41,6 +43,16 @@ function eliminarDTablaProAsig($con, $idPro){
         } else {
             return false;
         }
+}
+function eliminarDTablaSesiones($con, $idPro){
+    $del = $con->prepare("DELETE FROM sesion WHERE id_profe = ? ");
+    $del->bind_param("i", $idPro);
+
+    if ($del->execute()) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 ?>

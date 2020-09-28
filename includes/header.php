@@ -5,7 +5,7 @@
   <meta  http-equiv="Content-type" content="text/html" charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <title>Material Design for Bootstrap</title>
+  <title>Gestión Horarios Académicos</title>
   <!-- MDB icon -->
   <link rel="icon" href="../api/MDB-Free_4.17.0/img/mdb-favicon.ico" type="image/x-icon">
   <!-- Font Awesome -->

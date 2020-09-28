@@ -45,24 +45,15 @@ const app = new Vue({
         grupos:[],
         curso:'',
         semestre:'',
-        // tabla:[],
-      
-        // selectedTramo:'',
-        // selectedDias:'',
-        // sesionesCG:[],
-      
-        // selectedAsigSesi:[],
-        
-        // fondo:'',
-        // fondoLunes:[],
         estado:true,
       
-        // lenghtAsig:'',
         fin:'',
         inicio:'',
         codigo_asig:'',
         
-        usuario:5
+        usuario:5,
+        nombreAula:'',
+    
         
     },
     created(){
@@ -81,6 +72,23 @@ const app = new Vue({
       
     },
     computed:{
+        validarNombreAula(){
+          if(this.nombreAula!=''){
+              var encontro;
+              encontro=this.aulas.filter((filtro)=>{
+                return filtro.nombre.toUpperCase().match(this.nombreAula.toUpperCase())
+              });
+              if(encontro!=''){
+
+                 return  true;                 
+                 
+              }else{
+                return  false;                 
+              }
+           }else{
+            return  false;                 
+          }
+        },
          datosFiltradosUsu(){
             return this.listarUsu.filter((filtro)=>{
                     return filtro.p_nombre.toUpperCase().match(this.buscar.toUpperCase()) || filtro.p_apellido.toUpperCase().match(this.buscar.toUpperCase()) || filtro.p_dni.toUpperCase().match(this.buscar.toUpperCase())
@@ -91,14 +99,11 @@ const app = new Vue({
                   return filtro.nombres.toUpperCase().match(this.buscar.toUpperCase()) || filtro.apellidos.toUpperCase().match(this.buscar.toUpperCase()) || filtro.dni.toUpperCase().match(this.buscar.toUpperCase())
           });
         }, 
-
-        datosFiltradosAsig(){
-        
+        datosFiltradosAsig(){        
             return this.listarAsig.filter((filtro)=>{
                     return filtro.nombre.toUpperCase().match(this.buscarAsig.toUpperCase()) || filtro.titulo.toUpperCase().match(this.buscarAsig.toUpperCase()) || filtro.codigo.toUpperCase().match(this.buscarAsig.toUpperCase()) || filtro.estado.toUpperCase()==this.buscarAsig.toUpperCase() 
             });
         },
-
         datosFiltradosGrupos(){
           return this.grupos.filter((filtro)=>{
             return filtro.nombre.toUpperCase().match(this.buscarGrupos.toUpperCase()) 
@@ -118,8 +123,7 @@ const app = new Vue({
           return this.profeAsig.filter((filtro)=>{
             return filtro.nombre_profe.toUpperCase().match(this.buscarProfe.toUpperCase()) || filtro.apellido_profe.toUpperCase().match(this.buscarProfe.toUpperCase())  
           });
-        },
-      
+        },      
     },
     methods:{
        autorizamenu(){
@@ -223,11 +227,11 @@ const app = new Vue({
                
                     if (this.respuesta.trim() == "success") {
 
-                      swal.fire('Asignatura registrada', ''+this.respuesta, 'success')
+                      swal.fire('Asignatura registrada', '', 'success')
                       location.href = '../principal/asignatura.php'
                     
                     } else {
-                        swal.fire('Error al registrar ', ''+this.respuesta, 'fail')
+                        swal.fire('Error al registrar ', '', 'fail')
                     }
               })
           },
@@ -252,7 +256,7 @@ const app = new Vue({
     
                     } else {
     
-                        swal.fire('Error al registrar', ''+this.respuesta, 'fail')    
+                        swal.fire('Error al registrar', '', 'fail')    
                     }
                 })                  
           },
@@ -281,7 +285,7 @@ const app = new Vue({
                   swal.fire("Categoria registrada", "", "success");
                   location.href = '../principal/aulas.php'
                 } else {
-                  swal.fire("Error al registrar", "" + this.respuesta, "fail");
+                  swal.fire("Error al registrar", "", "fail");
                 }
               });
           },
@@ -350,11 +354,12 @@ const app = new Vue({
                 if (this.respuesta.trim() == "success") {
 
                     swal.fire('Aula registrado', '', 'success')
+                    this.getAulas();
                     location.href = '../principal/aulas.php'
 
                 } else {
 
-                    swal.fire('Error al registrar aula', ''+this.respuesta, 'fail')    
+                    swal.fire('Error al registrar aula', '', 'fail')    
                 }
             })                  
         },
@@ -455,7 +460,7 @@ const app = new Vue({
   
                   } else {
   
-                      swal.fire('Error al registrar grupo', ''+this.respuesta, 'fail')    
+                      swal.fire('Error al registrar grupo', '', 'fail')    
                   }
               })                  
           },
@@ -598,10 +603,33 @@ const app = new Vue({
                         axios.get('http://localhost/gha/api/crud/eliminarUsuario.php?id=' + $idProfe )
                         .then((res) => {
                             if (res.data.trim() == 'success') {
-                              Swal.fire('Borrado!', 'La sesión ha sido eliminada.', 'success')                            
+                              Swal.fire('Borrado!', 'El profesor ha sido eliminado.', 'success')                            
                               location.href = '../principal/buscar.php'
                             }else{
-                                Swal.fire('Falló!', 'No se pudo eliminar'+res.data, 'fail')                            
+                                Swal.fire('Falló!', 'No se pudo eliminar', 'fail')                            
+                            }
+                        }); 
+                    }
+              });
+          },
+          eliminarGrupo($idGrupo){
+            swal.fire({
+              title: 'Esta seguro?',
+              text: "No podras revertir esto!, tambien se borraran todas sus sesiones registradas",
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Si, bórralo!'
+              }).then((result) => {
+                    if (result.value) {
+                        axios.get('http://localhost/gha/api/crud/eliminarGrupo.php?id=' + $idGrupo )
+                        .then((res) => {
+                            if (res.data.trim() == 'success') {
+                              Swal.fire('Borrado!', 'El grupo ha sido eliminado.', 'success')                            
+                              location.href = '../principal/grupos.php'
+                            }else{
+                                Swal.fire('Falló!', 'No se pudo eliminar', 'fail')                            
                             }
                         }); 
                     }

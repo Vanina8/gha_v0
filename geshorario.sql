@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 15-08-2020 a las 16:00:25
+-- Tiempo de generación: 21-09-2020 a las 12:56:42
 -- Versión del servidor: 10.4.13-MariaDB
--- Versión de PHP: 7.4.7
+-- Versión de PHP: 7.4.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -39,18 +39,13 @@ CREATE TABLE `asignatura` (
 --
 
 INSERT INTO `asignatura` (`id`, `codigo`, `nombre`, `estado`) VALUES
-(40, 'Mark-MTIC', 'Direcci&oacute;n de mastketing y ventas en el', 0),
-(41, 'Proy-MTIC', 'Gestión de Proyectos', 1),
-(42, 'EF-MTIC', 'Gesti&oacute;n Econ&oacute;mica-financiera', 0),
-(43, 'Emp-MTIC', 'Gesti&oacute;n Empresarial', 1),
-(44, 'MP-MTIC', 'Metodolog&iacute;a de Proyectos', 0),
-(45, 'SI-MTIC', 'Sistemas de informaci&oacute;n ', 1),
-(46, 'DP-MTIC', 'Desarrollo Profesional', 0),
-(47, 'DO-MTIC', 'Direcci&oacute;n de operaciones', 0),
-(48, 'DOM1-IngSis', 'Dom&oacute;tica B&aacute;sica', 0),
-(49, 'Log-IngSis', 'L&oacute;gica Matem&aacute;tica', 0),
-(50, 'PD-IngSis', 'Programación distribuida', 0),
-(51, 'Log3-IngSis', 'Lógica matemática 3', 0);
+(88, 'Ing-Com1', 'Compiladores 1', 1),
+(89, 'Ing-Log1', 'Lógica Matemática 1', 1),
+(90, 'Ing-IA1', 'Inteligencia artificial 1', 0),
+(91, 'Ing-IA2', 'Inteligencia Artificial 2', 1),
+(92, 'Ges-Met1', 'Metodología 1', 1),
+(93, 'Ges-GF', 'Gestión Financiera', 0),
+(95, 'Cal-Ing1', 'Calculo 1', 1);
 
 -- --------------------------------------------------------
 
@@ -70,12 +65,11 @@ CREATE TABLE `aula` (
 --
 
 INSERT INTO `aula` (`id`, `nombre`, `estado`, `id_categoria`) VALUES
-(5, 'A-101', 0, 8),
 (6, 'A-102', 0, 6),
-(7, 'A-103', 0, 5),
-(8, 'A-105', 0, 8),
-(9, 'A-108', 0, 8),
-(10, 'A-110', 0, 6);
+(10, 'A-110', 0, 6),
+(11, 'A-108', 0, 6),
+(13, 'A-101', 0, 11),
+(14, 'A-201', 0, 13);
 
 -- --------------------------------------------------------
 
@@ -93,11 +87,9 @@ CREATE TABLE `categoriaaula` (
 --
 
 INSERT INTO `categoriaaula` (`id`, `nombre`) VALUES
-(5, 'Sant Miquel'),
 (6, 'Sant Jaume'),
-(8, 'Laboratorio'),
-(9, 'Parques'),
-(10, '');
+(11, 'Sant Miquel'),
+(13, 'Sant Antoni');
 
 -- --------------------------------------------------------
 
@@ -116,22 +108,12 @@ CREATE TABLE `curricula` (
 --
 
 INSERT INTO `curricula` (`id`, `id_titulo`, `codigo_asig`) VALUES
-(1, 19, '0'),
-(2, 19, '0'),
-(3, 19, 'Com1-IngSis'),
-(4, 20, 'Mark-MTIC'),
-(5, 20, 'Proy-MTIC'),
-(6, 20, 'EF-MTIC'),
-(7, 20, 'Emp-MTIC'),
-(8, 20, 'MP-MTIC'),
-(9, 20, 'SI-MTIC'),
-(10, 20, 'DP-MTIC'),
-(11, 20, 'DO-MTIC'),
-(12, 19, 'DOM1-IngSis'),
-(13, 19, 'Log-IngSis'),
-(14, 19, 'IC-IngSis'),
-(15, 19, 'Log2-IngSis'),
-(16, 19, 'Log3-IngSis');
+(60, 19, 'Ing-Com1'),
+(61, 19, 'Ing-Log1'),
+(62, 19, 'Ing-IA1'),
+(63, 19, 'Ing-IA2'),
+(64, 22, 'Ges-Met1'),
+(65, 21, 'Ges-GF');
 
 -- --------------------------------------------------------
 
@@ -142,18 +124,17 @@ INSERT INTO `curricula` (`id`, `id_titulo`, `codigo_asig`) VALUES
 CREATE TABLE `grupo` (
   `id` int(11) NOT NULL,
   `nombre` varchar(10) NOT NULL,
-  `descripcion` varchar(40) NOT NULL,
-  `id_curricula` int(11) NOT NULL
+  `descripcion` varchar(40) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `grupo`
 --
 
-INSERT INTO `grupo` (`id`, `nombre`, `descripcion`, `id_curricula`) VALUES
-(1, '1ero.', '', 0),
-(4, '1ero. D', '', 0),
-(5, '2do A', '', 0);
+INSERT INTO `grupo` (`id`, `nombre`, `descripcion`) VALUES
+(1, '1ero.', ''),
+(4, '1ero. D', ''),
+(5, '2do A', '');
 
 -- --------------------------------------------------------
 
@@ -164,32 +145,22 @@ INSERT INTO `grupo` (`id`, `nombre`, `descripcion`, `id_curricula`) VALUES
 CREATE TABLE `grupo_asig` (
   `id` int(11) NOT NULL,
   `id_grupo` int(11) NOT NULL,
-  `id_asig` int(11) NOT NULL,
-  `estado` int(1) NOT NULL
+  `id_asig` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `grupo_asig`
 --
 
-INSERT INTO `grupo_asig` (`id`, `id_grupo`, `id_asig`, `estado`) VALUES
-(2, 4, 49, 0),
-(7, 4, 41, 0),
-(8, 4, 47, 0),
-(9, 5, 44, 0),
-(10, 5, 41, 0),
-(11, 4, 44, 0),
-(13, 4, 42, 0),
-(14, 4, 48, 0),
-(15, 1, 51, 0),
-(16, 1, 41, 0),
-(17, 4, 43, 0),
-(20, 4, 51, 0),
-(21, 1, 49, 0),
-(22, 5, 51, 0),
-(23, 4, 46, 0),
-(24, 1, 46, 0),
-(25, 1, 45, 0);
+INSERT INTO `grupo_asig` (`id`, `id_grupo`, `id_asig`) VALUES
+(31, 1, 92),
+(32, 1, 91),
+(34, 5, 89),
+(35, 5, 91),
+(37, 4, 92),
+(38, 5, 88),
+(39, 4, 89),
+(40, 4, 95);
 
 -- --------------------------------------------------------
 
@@ -203,6 +174,16 @@ CREATE TABLE `horario` (
   `curso` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Volcado de datos para la tabla `horario`
+--
+
+INSERT INTO `horario` (`id`, `semestre`, `curso`) VALUES
+(5, 1, '2020'),
+(6, 2, '2020'),
+(7, 0, ''),
+(8, 0, '2020');
+
 -- --------------------------------------------------------
 
 --
@@ -211,28 +192,35 @@ CREATE TABLE `horario` (
 
 CREATE TABLE `profesor` (
   `id` int(3) NOT NULL,
-  `nombres` varchar(35) CHARACTER SET utf8 NOT NULL,
-  `apellidos` varchar(35) CHARACTER SET utf8 NOT NULL,
-  `dni` varchar(10) CHARACTER SET utf8 NOT NULL,
+  `nombres` varchar(35) COLLATE utf8_spanish_ci NOT NULL,
+  `apellidos` varchar(35) COLLATE utf8_spanish_ci NOT NULL,
+  `dni` varchar(10) COLLATE utf8_spanish_ci NOT NULL,
   `email` varchar(50) CHARACTER SET utf8 NOT NULL,
   `clave` varchar(300) CHARACTER SET utf8 NOT NULL,
   `estado` tinyint(1) NOT NULL,
   `id_rol` int(1) NOT NULL,
-  `telefono` varchar(15) CHARACTER SET utf8 NOT NULL
+  `telefono` varchar(15) CHARACTER SET utf8 NOT NULL,
+  `foto` varchar(50) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `profesor`
 --
 
-INSERT INTO `profesor` (`id`, `nombres`, `apellidos`, `dni`, `email`, `clave`, `estado`, `id_rol`, `telefono`) VALUES
-(41, 'Fany', 'asjfosiejfsiofjos', '23654585t', 'huacho1@gmail.com', '$2y$10$B41jqmg8dz67M.nzzjBar.ezvwuxkJbvK52xUD79RSvhBZRf2sbiC', 1, 4, '693478226'),
-(43, 'Miguel', 'Miralles', '256321452', 'mm2@gmail.com', '$2y$10$kBcL51LJD/JFuSCNR9jb6e3coI/Phjele8tJe72dXZFXyVMxqa83G', 1, 4, '695852365'),
-(46, 'Carla1', 'Riverola', '23695625s', 'carlita@gmail.com', '$2y$10$bnhswGNICaXwvmLq.bpUE.zCiLJZBCZKBklQkA2IZovi5O9AyOy/.', 0, 10, '69545236'),
-(47, 'Romina', 'Queraltttt', '23652541r', 'huacho3@gmail.com', '$2y$10$0uxjbNMLDTW52lQrzf0.dusMU4yGqA5LqSz1o4BeVgxkTFXCv8o/u', 0, 11, '695423582'),
-(48, 'Maria Elena', 'Villegas ', '36251442g', 'huacho4@gmail.com', '$2y$10$CbvCKnfgELfT57f.pSwrcuH7qMbAKHzX9Fx22NXG9Q4PRKsKWLWV.', 0, 12, '695214563'),
-(49, 'Mar&iacute;a Elena', 'V&aacute;squezEchegaray', '23965458g', 'mariaelena@gmail.com', '$2y$10$iUtd/NE6iyu5d.e19fYDue5Ygyn9EEduY9U/QNXvIu4iUOXZ7QX6a', 0, 12, '693582621'),
-(50, 'S&uacute;sana', 'P&eacute;rez Luna', '23695847f', 'susana@gmail.com', '$2y$10$sXDI04yImSNrdmHi0kr.3uq5QtV/tqrupqfWMlPrZWtCIWj084XVG', 0, 12, '65485256');
+INSERT INTO `profesor` (`id`, `nombres`, `apellidos`, `dni`, `email`, `clave`, `estado`, `id_rol`, `telefono`, `foto`) VALUES
+(86, 'Romina', 'Queralt Ensenyat ', '693458745f', 'romina@gmail.com', '$2y$10$wcDxiVa4OeAVo6nh3rhbBedzdbkM8EQjOrzwImvn/Yw5FwhMSgNLy', 1, 11, '695214585', '../api/login/foto_perfil/perfil.jpg'),
+(87, 'Maria Elena', 'Villegas Villegas', '63254125e', 'maria@gmail.com', '$2y$10$M4iM1AbEclAwJbmCvsaX7ugzdMHJx/5TnY5zZakphFwPJCvsCUa8y', 1, 12, '85265412', '../api/login/foto_perfil/perfil.jpg'),
+(89, 'Marta ', 'Lambea Azcona', '45214523g', 'marta@gmail.com', '$2y$10$GZSx0akwwWO/40y5T4GBsO0FS9QykIdkF8rsPcKbdk9RFv3RpTrFi', 1, 12, '475852145', '../api/login/foto_perfil/perfil.jpg'),
+(90, 'Felipe', 'Márquez Ruíz', '6325412t', 'felipe@gmail.com', '$2y$10$WlyHwidPaQKXLrStUooLEOLI/EzxYWSugRmKIeFkP.Lnd.1KSh7we', 1, 10, '693458741', '../api/login/foto_perfil/perfil.jpg'),
+(92, 'Fany', 'Chávez Vega', '23658596f', 'fany@gmail.com', '$2y$10$gbjBN70NQhHaOSlNyKioSehZZWUnUuDM4sOOyyk5K9fkUKYHttg42', 1, 10, '693254581', '../api/login/foto_perfil/perfil.jpg'),
+(93, 'Maria Tereza', 'Ciurliza', '3698545g', 'mariat@gmail.com', '$2y$10$.qfsomBsowtasETxB.AoAO9pPFG2L.xl6iH4WR9qw7.4e0zs3SR/a', 1, 12, '695124574', '../api/login/foto_perfil/perfil.jpg'),
+(94, 'Amelia', 'Rivera Chumbes', '2654125t', 'amelia@gmail.com', '$2y$10$kGcMGSPat.Nfxp4d7bsBmOrIDRJG9a5/eleQbZ/eTFrNQElinEHci', 1, 12, '987582145', '../api/login/foto_perfil/perfil.jpg'),
+(95, 'Katucha', 'Bento Fernandez', '5621423h', 'katucha@gmail.com', '$2y$10$BlsdEMt.fEheidHcvENWIeYmtNujEXLg802PbRZK/zzzQiEXAN9Mm', 0, 12, '693254587', '../api/login/foto_perfil/perfil.jpg'),
+(96, 'Jose', 'Rivera Rovira', '23654215f', 'jose@gmail.com', '$2y$10$FohRas24JZe5kjWQNvVG5O.QU/JZdxw3XZITmSdy4piu3da16JSD2', 1, 12, '852654126', '../api/login/foto_perfil/perfil.jpg'),
+(98, 'Sonia', 'Ramirez Alvarado', '63254125h', 'sonia@gmail.com', '$2y$10$cea02kXwooO12YTbg1nEReVo1TUTMObd3crTFEd.VAyuk2P0Q3WkK', 1, 12, '695214584', '../api/login/foto_perfil/perfil.jpg'),
+(99, 'Fernanda', 'Medez Suarez', '3652145r', 'fernanda@gmail.com', '$2y$10$fzVDO6gtFw6dymNwwvpboOsK/tEhw0qfSacbGAwWwMCR5L62lCITO', 1, 12, '695421452', '../api/login/foto_perfil/3652145r.png'),
+(100, 'Luisa', 'Muñoz Solis', '6321252f', 'luisa@gmail.com', '$2y$10$exLb2FyCKzCOwhWKtNCov.1hVlWQeD4DFng19q.mhB74c0A/oG/KC', 1, 12, '695478521', '../api/login/foto_perfil/perfil.jpg'),
+(102, 'Alicia', 'Aguirre Zapata', '23658545k', 'alicia@gmail.com', '$2y$10$.sNPGi.i8i7LfevyEQI6wO96g2X7K2S/b6c8SwRsZC.xf.l5pv/2C', 1, 10, '', '../api/login/foto_perfil/perfil.jpg');
 
 -- --------------------------------------------------------
 
@@ -251,14 +239,16 @@ CREATE TABLE `profe_asig` (
 --
 
 INSERT INTO `profe_asig` (`id`, `id_profe`, `id_asig`) VALUES
-(1, 46, 51),
-(3, 48, 44),
-(4, 46, 48),
-(5, 47, 45),
-(6, 47, 46),
-(7, 48, 46),
-(8, 48, 51),
-(9, 47, 51);
+(26, 89, 88),
+(27, 87, 89),
+(28, 87, 91),
+(29, 89, 92),
+(30, 98, 89),
+(31, 98, 88),
+(32, 96, 88),
+(33, 96, 95),
+(34, 94, 89),
+(35, 94, 91);
 
 -- --------------------------------------------------------
 
@@ -297,65 +287,34 @@ CREATE TABLE `sesion` (
   `dia` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- --------------------------------------------------------
-
 --
--- Estructura de tabla para la tabla `sesion_asig`
+-- Volcado de datos para la tabla `sesion`
 --
 
-CREATE TABLE `sesion_asig` (
-  `id` int(11) NOT NULL,
-  `id_sesion` int(11) NOT NULL,
-  `id_asig` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `sesion_aula`
---
-
-CREATE TABLE `sesion_aula` (
-  `id` int(4) NOT NULL,
-  `id_aula` int(3) NOT NULL,
-  `id_sesion` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Volcado de datos para la tabla `sesion_aula`
---
-
-INSERT INTO `sesion_aula` (`id`, `id_aula`, `id_sesion`) VALUES
-(1, 5, 2),
-(2, 6, 3),
-(3, 5, 4),
-(4, 6, 5),
-(5, 7, 6),
-(6, 7, 8);
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `sesion_grupo`
---
-
-CREATE TABLE `sesion_grupo` (
-  `id` int(11) NOT NULL,
-  `id_grupo` int(11) NOT NULL,
-  `id_sesion` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `sesion_profe`
---
-
-CREATE TABLE `sesion_profe` (
-  `id` int(4) NOT NULL,
-  `id_profe` int(3) NOT NULL,
-  `id_sesion` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+INSERT INTO `sesion` (`id`, `id_aula`, `id_tramo`, `id_grupo`, `id_asig`, `id_profe`, `id_horario`, `dia`) VALUES
+(61, 11, 12, 5, 91, 87, 5, 2),
+(62, 11, 12, 5, 91, 87, 5, 4),
+(63, 10, 19, 5, 91, 78, 5, 5),
+(64, 11, 12, 5, 91, 87, 5, 3),
+(65, 13, 13, 5, 91, 87, 5, 1),
+(66, 10, 20, 5, 91, 87, 5, 3),
+(67, 13, 20, 5, 91, 78, 5, 2),
+(68, 6, 13, 4, 92, 89, 5, 5),
+(69, 11, 19, 5, 91, 78, 5, 3),
+(70, 10, 13, 4, 92, 89, 5, 3),
+(71, 6, 12, 4, 92, 89, 5, 2),
+(72, 6, 15, 4, 92, 89, 5, 2),
+(73, 13, 15, 1, 91, 87, 5, 2),
+(74, 6, 15, 5, 89, 78, 5, 1),
+(75, 10, 12, 5, 88, 89, 5, 5),
+(76, 14, 12, 1, 92, 89, 5, 4),
+(77, 14, 12, 1, 91, 78, 5, 2),
+(78, 10, 19, 1, 91, 94, 5, 3),
+(79, 11, 19, 1, 91, 94, 5, 1),
+(80, 11, 15, 1, 91, 94, 5, 1),
+(81, 11, 19, 1, 92, 89, 5, 4),
+(82, 10, 12, 4, 95, 96, 5, 1),
+(83, 10, 19, 4, 89, 98, 5, 1);
 
 -- --------------------------------------------------------
 
@@ -376,7 +335,6 @@ CREATE TABLE `titulo` (
 INSERT INTO `titulo` (`id`, `nombre`, `curso`) VALUES
 (2, 'Arquitectura', '2020'),
 (3, 'Ingenieria Multimedia', '2020'),
-(19, 'Ingenieria de Sistemas', '2020'),
 (21, 'Máster en Gestión de las TIC', '2020'),
 (22, 'Máster en Gestión Financiera', '2020');
 
@@ -399,8 +357,10 @@ CREATE TABLE `tramos` (
 INSERT INTO `tramos` (`id`, `inicio`, `fin`) VALUES
 (12, '10:00', '11:00'),
 (13, '11:30', '12:30'),
-(14, '13:00', '14:00'),
-(15, '09:00', '10:00');
+(15, '09:00', '10:00'),
+(19, '08:00', '09:00'),
+(20, '12:30', '13:32'),
+(21, '07:44', '07:45');
 
 --
 -- Índices para tablas volcadas
@@ -477,24 +437,6 @@ ALTER TABLE `sesion`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `sesion_asig`
---
-ALTER TABLE `sesion_asig`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `sesion_aula`
---
-ALTER TABLE `sesion_aula`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `sesion_profe`
---
-ALTER TABLE `sesion_profe`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indices de la tabla `titulo`
 --
 ALTER TABLE `titulo`
@@ -514,25 +456,25 @@ ALTER TABLE `tramos`
 -- AUTO_INCREMENT de la tabla `asignatura`
 --
 ALTER TABLE `asignatura`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=96;
 
 --
 -- AUTO_INCREMENT de la tabla `aula`
 --
 ALTER TABLE `aula`
-  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `categoriaaula`
 --
 ALTER TABLE `categoriaaula`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `curricula`
 --
 ALTER TABLE `curricula`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
 
 --
 -- AUTO_INCREMENT de la tabla `grupo`
@@ -544,25 +486,25 @@ ALTER TABLE `grupo`
 -- AUTO_INCREMENT de la tabla `grupo_asig`
 --
 ALTER TABLE `grupo_asig`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT de la tabla `horario`
 --
 ALTER TABLE `horario`
-  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `profesor`
 --
 ALTER TABLE `profesor`
-  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
 
 --
 -- AUTO_INCREMENT de la tabla `profe_asig`
 --
 ALTER TABLE `profe_asig`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT de la tabla `rol`
@@ -574,25 +516,7 @@ ALTER TABLE `rol`
 -- AUTO_INCREMENT de la tabla `sesion`
 --
 ALTER TABLE `sesion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
-
---
--- AUTO_INCREMENT de la tabla `sesion_asig`
---
-ALTER TABLE `sesion_asig`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `sesion_aula`
---
-ALTER TABLE `sesion_aula`
-  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- AUTO_INCREMENT de la tabla `sesion_profe`
---
-ALTER TABLE `sesion_profe`
-  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
 
 --
 -- AUTO_INCREMENT de la tabla `titulo`
@@ -604,7 +528,7 @@ ALTER TABLE `titulo`
 -- AUTO_INCREMENT de la tabla `tramos`
 --
 ALTER TABLE `tramos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

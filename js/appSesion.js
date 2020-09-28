@@ -33,12 +33,9 @@ const app = new Vue({
         profeEncendido:false,
         idProfeEncendido:'',   //este es el id del profesor que debe tomarse al momento de registrar la sesion
         indexProfeEncendido:'', // para revisar antes de registrar que el boton no este desactivado por siaca, no he comprobado que pueda darse el caso.
-
-        // estadoBtnAula:false,
      
         dataSesion:[],  
         idHorario: -1,
-        // mostrarmenu:''
         usuario:5
     },
     created(){
@@ -81,17 +78,11 @@ const app = new Vue({
             axios.get('http://localhost/gha/api/getRol.php')
             .then(res =>{                    
               this.usuario = res.data             
-
-              console.log('rol de usuario es:'+this.usuario);
             })
        },
       infoInicio(){
         if(this.selectedYear!='' && this.selectedSem!=''){
-          Swal.fire(
-            'Nuevo panel',
-            '',
-            'info'
-          )
+          Swal.fire('Nuevo panel','','info')
           this.buscaNuevo();
         }
       },
@@ -114,7 +105,6 @@ const app = new Vue({
               .get("http://localhost/gha/api/crud/getTramos.php")
               .then((res) => {
                 this.tramoshorario = res.data;
-                console.log('esto es lo que trae tramoshorario'+this.tramoshorario);
               });             
         },
         getAulas() {
@@ -138,16 +128,13 @@ const app = new Vue({
               this.profeAsig = res.data;
             });     
         },
-
         getSesionesCursoGrupo($idgrupo, $horario){
-            console.log('aca entra a getSesionesCursoGrupo');
             axios
               .get("http://localhost/gha/api/crud/getSesionesCurso.php/?id_grupo="+$idgrupo+"&id_horario="+$horario)
               .then((res) => {
                 this.sesionesCG = res.data;
                 console.log(' aca se supone que va a ir a iniciaTabalDias()');
                 this.reiniciaPanel();
-
               });             
         },
         getSesiones($curso, $semestre, $horario){
@@ -293,12 +280,6 @@ const app = new Vue({
           limpiaDiayTramo(){
 
             this.eliminaDiayTramo(0, this.numeroDia.length);
-              // var auxD, auxT ;
-              // auxD = numeroDia;
-              // auxT= idTramo;
-              // for(indice in auxD ){
-              //   this.eliminaDiaTramoEncendido(auxD[indice], auxT[indice]);
-              // }
           },
 
           eliminaDiaTramoEncendido($ndia,$tramo){
@@ -635,8 +616,6 @@ const app = new Vue({
             this.iniciaBotonesProfe();
             this.limpiaAula();
             this.limpiaProfe();
-            // this.revisaEstadoAula();
-            // this.revisaEstadoProfe();
           },
           ocupadoBoton($clases, $index){ // boton ocupado
             var x = document.getElementsByClassName($clases);
