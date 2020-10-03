@@ -74,7 +74,7 @@ const app = new Vue({
 
         autorizamenu(){
             console.log('estoy en autorizacion usuairo');
-                axios.get('http://localhost/gha/api/getRol.php')
+                axios.get('http://localhost/gha/gha_nuevo/api/getRol.php')
                 .then(res =>{                    
                   this.usuario = res.data             
                 })
@@ -91,7 +91,7 @@ const app = new Vue({
           },
         getSesiones($curso, $semestre, $horario){
             axios
-            .get("http://localhost/gha/api/crud/getSesion.php/?curso="+$curso+"&semestre="+$semestre+"&idhorario="+$horario)
+            .get("http://localhost/gha/gha_nuevo/api/crud/getSesion.php/?curso="+$curso+"&semestre="+$semestre+"&idhorario="+$horario)
             .then((res) => {
                 this.sequeda = res.data;
                 if(this.sequeda.length>0){
@@ -104,41 +104,41 @@ const app = new Vue({
         },
         getTitulosYear(){            
             axios
-              .get('http://localhost/gha/api/crud/getTitulosYear.php')
+              .get('http://localhost/gha/gha_nuevo/api/crud/getTitulosYear.php')
               .then((res) => {                    
                   this.titulosYear = res.data;
               });        
           },
           getGrupos() {
               axios
-                .get("http://localhost/gha/api/crud/getGrupos.php")
+                .get("http://localhost/gha/gha_nuevo/api/crud/getGrupos.php")
                 .then((res) => {
                   this.grupos = res.data;
                 });
           },   
           getAulas() {
             axios
-              .get("http://localhost/gha/api/crud/getAulas.php")
+              .get("http://localhost/gha/gha_nuevo/api/crud/getAulas.php")
               .then((res) => {
                 this.aulas = res.data;
               });
           },    
           getProfes(){  // solo profesores con asignaturas asignadas
             axios
-            .get("http://localhost/gha/api/crud/getProfeVer.php")
+            .get("http://localhost/gha/gha_nuevo/api/crud/getProfeVer.php")
             .then((res) => {
               this.profesores = res.data;
             });     
           },
           getAsignaturas(){
-                axios.get('http://localhost/gha/api/crud/getAsignaturas.php')
+                axios.get('http://localhost/gha/gha_nuevo/api/crud/getAsignaturas.php')
                 .then(res =>{                    
                     this.asignaturas = res.data
                 })
           },
           getTramos(){
             axios
-              .get("http://localhost/gha/api/crud/getTramos.php")
+              .get("http://localhost/gha/gha_nuevo/api/crud/getTramos.php")
               .then((res) => {
                 this.tramoshorario = res.data;
               });             

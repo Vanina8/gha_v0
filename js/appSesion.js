@@ -75,7 +75,7 @@ const app = new Vue({
     methods: {
       autorizamenu(){
         console.log('estoy en autorizacion usuairo');
-            axios.get('http://localhost/gha/api/getRol.php')
+            axios.get('http://localhost/gha/gha_nuevo/api/getRol.php')
             .then(res =>{                    
               this.usuario = res.data             
             })
@@ -88,49 +88,49 @@ const app = new Vue({
       },
        getTitulosYear(){            
           axios
-            .get('http://localhost/gha/api/crud/getTitulosYear.php')
+            .get('http://localhost/gha/gha_nuevo/api/crud/getTitulosYear.php')
             .then((res) => {                    
                 this.titulosYear = res.data;
             });        
         },
         getGrupos() {
             axios
-              .get("http://localhost/gha/api/crud/getGrupos.php")
+              .get("http://localhost/gha/gha_nuevo/api/crud/getGrupos.php")
               .then((res) => {
                 this.grupos = res.data;
               });
         },     
         getTramos(){
             axios
-              .get("http://localhost/gha/api/crud/getTramos.php")
+              .get("http://localhost/gha/gha_nuevo/api/crud/getTramos.php")
               .then((res) => {
                 this.tramoshorario = res.data;
               });             
         },
         getAulas() {
             axios
-              .get("http://localhost/gha/api/crud/getAulas.php")
+              .get("http://localhost/gha/gha_nuevo/api/crud/getAulas.php")
               .then((res) => {
                 this.aulas = res.data;
               });
           },    
         getGruposAsig(){
             axios
-            .get("http://localhost/gha/api/crud/getGruposAsig.php")
+            .get("http://localhost/gha/gha_nuevo/api/crud/getGruposAsig.php")
             .then((res) => {
               this.gruposAsig = res.data;
             });     
           },
         getProfesAsig(){
             axios
-            .get("http://localhost/gha/api/crud/getProfeAsig.php")
+            .get("http://localhost/gha/gha_nuevo/api/crud/getProfeAsig.php")
             .then((res) => {
               this.profeAsig = res.data;
             });     
         },
         getSesionesCursoGrupo($idgrupo, $horario){
             axios
-              .get("http://localhost/gha/api/crud/getSesionesCurso.php/?id_grupo="+$idgrupo+"&id_horario="+$horario)
+              .get("http://localhost/gha/gha_nuevo/api/crud/getSesionesCurso.php/?id_grupo="+$idgrupo+"&id_horario="+$horario)
               .then((res) => {
                 this.sesionesCG = res.data;
                 console.log(' aca se supone que va a ir a iniciaTabalDias()');
@@ -139,7 +139,7 @@ const app = new Vue({
         },
         getSesiones($curso, $semestre, $horario){
             axios
-            .get("http://localhost/gha/api/crud/getSesion.php/?curso="+$curso+"&semestre="+$semestre+"&idhorario="+$horario)
+            .get("http://localhost/gha/gha_nuevo/api/crud/getSesion.php/?curso="+$curso+"&semestre="+$semestre+"&idhorario="+$horario)
             .then((res) => {
                 this.sequeda = res.data;
                 if(this.sequeda.length>0){
@@ -458,7 +458,7 @@ const app = new Vue({
               }).then((result) => {
                 if (result.value) {
                     axios
-                      .get("http://localhost/gha/api/crud/eliminarSesion.php/?id="+$idsesion)
+                      .get("http://localhost/gha/gha_nuevo/api/crud/eliminarSesion.php/?id="+$idsesion)
                       .then((res) => {
                         this.getSesiones(this.selectedYear, this.selectedSem, this.idHorario);  
                         Swal.fire(

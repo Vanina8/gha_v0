@@ -30,7 +30,7 @@ const app = new Vue({
 
     autorizamenu(){
       console.log('estoy en autorizacion usuairo');
-          axios.get('http://localhost/gha/api/getRol.php')
+          axios.get('http://localhost/gha/gha_nuevo/api/getRol.php')
           .then(res =>{                    
             this.usuario = res.data             
 
@@ -39,13 +39,13 @@ const app = new Vue({
      },
 
     getUsuarios(){
-      axios.get('http://localhost/gha/api/crud/getUsuarios.php')
+      axios.get('http://localhost/gha/gha_nuevo/api/crud/getUsuarios.php')
       .then(res =>{                    
           this.listarUsu = res.data
       })
     },
     getRoles(){
-      axios.get('http://localhost/gha/api/crud/getRoles.php')
+      axios.get('http://localhost/gha/gha_nuevo/api/crud/getRoles.php')
       .then(res =>{                    
           this.roles = res.data
           // swal.fire('listado ok', '', 'success')
