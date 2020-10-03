@@ -53,6 +53,8 @@ const app = new Vue({
         
         usuario:5,
         nombreAula:'',
+        una:'',
+        prueba:''
             
     },
     created(){
