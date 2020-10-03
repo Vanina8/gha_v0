@@ -53,8 +53,7 @@ const app = new Vue({
         
         usuario:5,
         nombreAula:'',
-    
-        
+            
     },
     created(){
         this.autorizamenu()
@@ -128,61 +127,61 @@ const app = new Vue({
     methods:{
        autorizamenu(){
 
-            axios.get('http://localhost/gha/gha_nuevo/api/getRol.php')
+            axios.get('http://localhost/gha/api/getRol.php')
             .then(res =>{                    
               this.usuario = res.data             
             })
        },
         getUsuarios(){         
-                axios.get('http://localhost/gha/gha_nuevo/api/crud/getUsuarios.php')
+                axios.get('http://localhost/gha/api/crud/getUsuarios.php')
                 .then(res =>{                    
                     this.listarUsu = res.data
                 })
         },
         getProfesores(){         
-          axios.get('http://localhost/gha/gha_nuevo/api/crud/getProfes.php')
+          axios.get('http://localhost/gha/api/crud/getProfes.php')
           .then(res =>{                    
               this.listarPro = res.data
           })
         },
 
         getAsignaturas(){
-                axios.get('http://localhost/gha/gha_nuevo/api/crud/getAsignaturas.php')
+                axios.get('http://localhost/gha/api/crud/getAsignaturas.php')
                 .then(res =>{                    
                     this.listarAsig = res.data
                 })
         },
         getTitulos(){
             
-                axios.get('http://localhost/gha/gha_nuevo/api/crud/getTitulos.php')
+                axios.get('http://localhost/gha/api/crud/getTitulos.php')
                 .then(res =>{                    
                     this.titulos = res.data
                 })
         },
         getCatAulas() {
             axios
-              .get("http://localhost/gha/gha_nuevo/api/crud/getCatAulas.php")
+              .get("http://localhost/gha/api/crud/getCatAulas.php")
               .then((res) => {
                 this.categoriasaulas = res.data;
               });
           },
           getGrupos() {
             axios
-              .get("http://localhost/gha/gha_nuevo/api/crud/getGrupos.php")
+              .get("http://localhost/gha/api/crud/getGrupos.php")
               .then((res) => {
                 this.grupos = res.data;
               });
           },     
           getAulas() {
             axios
-              .get("http://localhost/gha/gha_nuevo/api/crud/getAulas.php")
+              .get("http://localhost/gha/api/crud/getAulas.php")
               .then((res) => {
                 this.aulas = res.data;
               });
           },        
           getTramos(){
             axios
-              .get("http://localhost/gha/gha_nuevo/api/crud/getTramos.php")
+              .get("http://localhost/gha/api/crud/getTramos.php")
               .then((res) => {
                 this.tramoshorario = res.data;
                 console.log(this.tramoshorario);
@@ -191,7 +190,7 @@ const app = new Vue({
           },
           getSesionesCursoGrupo($idgrupo, $curso, $semestre){
             axios
-              .get("http://localhost/gha/gha_nuevo/api/crud/getSesionesCurso.php/?id_grupo="+$idgrupo+"&curso="+$curso+"&semestre="+$semestre)
+              .get("http://localhost/gha/api/crud/getSesionesCurso.php/?id_grupo="+$idgrupo+"&curso="+$curso+"&semestre="+$semestre)
               .then((res) => {
                 this.sesionesCG = res.data;
                 console.log('Esto es lo que trae'+this.sesionesCG);
@@ -199,14 +198,14 @@ const app = new Vue({
           },
           getGruposAsig(){
             axios
-            .get("http://localhost/gha/gha_nuevo/api/crud/getGruposAsig.php")
+            .get("http://localhost/gha/api/crud/getGruposAsig.php")
             .then((res) => {
               this.gruposAsig = res.data;
             });     
           },
           getProfesAsig(){
             axios
-            .get("http://localhost/gha/gha_nuevo/api/crud/getProfeAsig.php")
+            .get("http://localhost/gha/api/crud/getProfeAsig.php")
             .then((res) => {
               this.profeAsig = res.data;
             });     
@@ -302,7 +301,7 @@ const app = new Vue({
               })
               .then((aceptar)=>{
                   if (aceptar.value) {
-                      axios.get('http://localhost/gha/gha_nuevo/api/crud/eliminarCateAula.php?id=' + id )
+                      axios.get('http://localhost/gha/api/crud/eliminarCateAula.php?id=' + id )
                       .then((res) =>{
                           if (res.data.trim() == 'success') {
                               swal.fire('Categoria eliminada', '', 'success')
@@ -328,7 +327,7 @@ const app = new Vue({
               })
             .then((aceptar)=>{
                 if (aceptar.value) {
-                    axios.get('http://localhost/gha/gha_nuevo/api/crud/eliminarAula.php?id=' + id )
+                    axios.get('http://localhost/gha/api/crud/eliminarAula.php?id=' + id )
                     .then((res) =>{
                         if (res.data.trim() == 'success') {
                             swal.fire('Categoria eliminada', '', 'success')
@@ -374,7 +373,7 @@ const app = new Vue({
             })
             .then((aceptar)=>{
                 if (aceptar) {
-                    axios.get('http://localhost/gha/gha_nuevo/api/crud/eliminarTitulo.php?id=' + id )
+                    axios.get('http://localhost/gha/api/crud/eliminarTitulo.php?id=' + id )
                     .then(res =>{
                      if (res.data.trim() == 'success') {
                          swal.fire('Tìtulo eliminado')
@@ -400,7 +399,7 @@ const app = new Vue({
             })
             .then((aceptar)=>{
                 if (aceptar.value) {
-                    axios.get('http://localhost/gha/gha_nuevo/api/crud/eliminarAsignatura.php?id=' + id +'&codigo='+ codigo)
+                    axios.get('http://localhost/gha/api/crud/eliminarAsignatura.php?id=' + id +'&codigo='+ codigo)
                     .then((res) =>{
                       this.respuesta= res.data
                         if (this.respuesta.trim() == 'success') {
@@ -429,7 +428,7 @@ const app = new Vue({
             })
             .then((aceptar)=>{
                 if (aceptar.value) {
-                    axios.get('http://localhost/gha/gha_nuevo/api/crud/eliminarTramo.php?id=' + id )
+                    axios.get('http://localhost/gha/api/crud/eliminarTramo.php?id=' + id )
                     .then((res) =>{
                      if (res.data.trim() == 'success') {
                          swal.fire('Eliminado', '', 'success')
@@ -487,7 +486,7 @@ const app = new Vue({
           },
           getSesiones(){
             axios
-            .get("http://localhost/gha/gha_nuevo/api/crud/getSesion.php")
+            .get("http://localhost/gha/api/crud/getSesion.php")
             .then((res) => {
                 this.sequeda = res.data;
                 console.log('esto trae:'+this.sequeda)
@@ -526,7 +525,7 @@ const app = new Vue({
               })
               .then((aceptar)=>{
                   if (aceptar.value) {
-                      axios.get('http://localhost/gha/gha_nuevo/api/crud/eliminargrupoasigna.php?id=' + id )
+                      axios.get('http://localhost/gha/api/crud/eliminargrupoasigna.php?id=' + id )
                       .then(res =>{
                       if (res.data.trim() == 'success') {
                           swal.fire('Asignación eliminada')
@@ -574,7 +573,7 @@ const app = new Vue({
             })
             .then((aceptar)=>{
                 if (aceptar.value) {
-                    axios.get('http://localhost/gha/gha_nuevo/api/crud/eliminarProfeAsig.php?id=' + id )
+                    axios.get('http://localhost/gha/api/crud/eliminarProfeAsig.php?id=' + id )
                     .then(res =>{
                         if (res.data.trim() == 'success') {
                             swal.fire('Asignación eliminada')
@@ -600,7 +599,7 @@ const app = new Vue({
               confirmButtonText: 'Si, bórralo!'
               }).then((result) => {
                     if (result.value) {
-                        axios.get('http://localhost/gha/gha_nuevo/api/crud/eliminarUsuario.php?id=' + $idProfe )
+                        axios.get('http://localhost/gha/api/crud/eliminarUsuario.php?id=' + $idProfe )
                         .then((res) => {
                             if (res.data.trim() == 'success') {
                               Swal.fire('Borrado!', 'El profesor ha sido eliminado.', 'success')                            
@@ -623,7 +622,7 @@ const app = new Vue({
               confirmButtonText: 'Si, bórralo!'
               }).then((result) => {
                     if (result.value) {
-                        axios.get('http://localhost/gha/gha_nuevo/api/crud/eliminarGrupo.php?id=' + $idGrupo )
+                        axios.get('http://localhost/gha/api/crud/eliminarGrupo.php?id=' + $idGrupo )
                         .then((res) => {
                             if (res.data.trim() == 'success') {
                               Swal.fire('Borrado!', 'El grupo ha sido eliminado.', 'success')                            
