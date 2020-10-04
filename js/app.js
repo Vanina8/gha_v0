@@ -53,8 +53,7 @@ const app = new Vue({
         
         usuario:5,
         nombreAula:'',
-        una:'',
-        prueba:''
+      
             
     },
     created(){
@@ -80,9 +79,7 @@ const app = new Vue({
                 return filtro.nombre.toUpperCase().match(this.nombreAula.toUpperCase())
               });
               if(encontro!=''){
-
-                 return  true;                 
-                 
+                 return  true;                                  
               }else{
                 return  false;                 
               }
@@ -128,7 +125,6 @@ const app = new Vue({
     },
     methods:{
        autorizamenu(){
-
             axios.get('http://localhost/gha/api/getRol.php')
             .then(res =>{                    
               this.usuario = res.data             
@@ -186,16 +182,13 @@ const app = new Vue({
               .get("http://localhost/gha/api/crud/getTramos.php")
               .then((res) => {
                 this.tramoshorario = res.data;
-                console.log(this.tramoshorario);
-              });
-             
+              });             
           },
           getSesionesCursoGrupo($idgrupo, $curso, $semestre){
             axios
               .get("http://localhost/gha/api/crud/getSesionesCurso.php/?id_grupo="+$idgrupo+"&curso="+$curso+"&semestre="+$semestre)
               .then((res) => {
                 this.sesionesCG = res.data;
-                console.log('Esto es lo que trae'+this.sesionesCG);
               });             
           },
           getGruposAsig(){
@@ -212,29 +205,24 @@ const app = new Vue({
               this.profeAsig = res.data;
             });     
           },
+          // getSesiones(){
+          //   axios
+          //   .get("http://localhost/gha/api/crud/getSesion.php")
+          //   .then((res) => {
+          //       this.sequeda = res.data;
+          //       console.log('esto trae:'+this.sequeda)
+          //   });             
+          //  },
 
           registroAsignatura() {
-
-              if(this.codigoAsigFiltrado().length>0){
+            if(this.validaCodAsi()){
                 swal.fire('Error código ya existe', 'El código debe ser único', 'fail');
-                return;
-              }
-
-              const form = document.getElementById("formAsignatura")
-              axios
-                .post("../api/Registro/asignatura.php", new FormData(form))
-                .then(res => {
-                  this.respuesta = res.data      
-               
-                    if (this.respuesta.trim() == "success") {
-
-                      swal.fire('Asignatura registrada', '', 'success')
-                      location.href = '../principal/asignatura.php'
-                    
-                    } else {
-                        swal.fire('Error al registrar ', '', 'fail')
-                    }
-              })
+            }else{
+              this.registrar("formAsignatura", "../api/Registro/asignatura.php", "Asignatura registrada", "Error al registrar", "../principal/asignatura.php","asignatura" );
+            }
+          },
+          validaCodAsi(){
+            return this.codigoAsigFiltrado().length>0;              
           },
           codigoAsigFiltrado(){
             return this.listarAsig.filter((filtro)=>{
@@ -242,24 +230,46 @@ const app = new Vue({
             })
           },
           registroTitulo() {
+            this.registrar("formTitulo", "../api/Registro/titulo.php", "Titulo registrado", "Error al registrar", "../principal/asignatura.php","titulo");
+          },
+          registroCatAula() {
+            this.registrar("formCatAula","../api/Registro/categoriaAula.php","Categoria registrada", "Error al registrar", "../principal/aulas.php", "cataula")
+          },
+          registroAula() {
+            this.registrar("formAula", "../api/Registro/aula.php", "Aula registrado", "Error al registrar aula", "../principal/aulas.php", "aula" );
+          },
+          registroGrupo() {
+            this.registrar("formGrupo", "../api/Registro/grupo.php","Grupo registrado", "Error al registrar grupo", "../principal/grupos.php", "grupo" );
+          },
+          registroTramo() {
+            if(this.validaTramos()){
+                this.registrar("formTramo", "../api/Registro/tramo.php","Tramo registrado","Error al registrar tramo", "../principal/tramos.php","tramo");
+            }
+          },
+          RegistroProfeAsignaAsi(){
+            this.registrar("formProfeAsigna", "../api/Registro/profesasigna.php", "Asignación registrada", "Error al registrar asignación", "../principal/profeasigna.php", "profeasig");
+          },
+          RegistroGrupoAsignaAsi(){
+            this.registrar("formGrupoAsigna", "../api/Registro/gruposasigna.php","Asignación registrada","Error al registrar asignación","../principal/gruposasigna.php", "grupoasig");
+          },
+          registrar($formulario, $archivo, $mensajeOk, $mensajeFallo, $archivoOk, $tipo){
 
-            const form = document.getElementById("formTitulo");
-             
-              axios
-                .post("../api/Registro/titulo.php", new FormData(form))
-                .then((res) => {
-                  this.respuesta = res.data
-
-                    if (this.respuesta.trim() == "success") {
-
-                        swal.fire('Titulo registrado', '', 'success')
-                        location.href = '../principal/asignatura.php'
-    
-                    } else {
-    
-                        swal.fire('Error al registrar', '', 'fail')    
-                    }
-                })                  
+            const form = document.getElementById($formulario);         
+            axios
+              .post($archivo, new FormData(form))
+              .then((res) => {
+                this.respuesta = res.data
+  
+                  if (this.respuesta.trim() == "success") {
+                      swal.fire($mensajeOk, '', 'success')
+                      if($tipo=="aula"){
+                          this.getAulas();
+                      }
+                      location.href = $archivoOk
+                  } else {
+                      swal.fire($mensajeFallo, '', 'fail')    
+                  }
+              })                
           },
           cargaanos(){
                 var d = new Date();
@@ -269,372 +279,109 @@ const app = new Vue({
                 for (i = 0; i < 5; i++) {
                     this.years[i] = n + i;
                 }            
-
           },
-          registroCatAula() {
-
-            console.log("Hola estoy dentro");
-            const form = document.getElementById("formCatAula");
-            console.log("Hola estoy dentro 2");
-      
-            axios
-              .post("../api/Registro/categoriaAula.php", new FormData(form))
-              .then((res) => {
-                this.respuesta = res.data;
-      
-                if (this.respuesta.trim() == "success") {
-                  swal.fire("Categoria registrada", "", "success");
-                  location.href = '../principal/aulas.php'
-                } else {
-                  swal.fire("Error al registrar", "", "fail");
-                }
-              });
-          },
-
-          eliminarCateAula(id){
-              swal.fire({
-                  title:'Seguro de eliminar?',
-                  text:'Al eliminarlo no podras recuperarlo',
-                  icon:'warning',
-                  showCancelButton: true,
-                  confirmButtonColor: '#3085d6',
-                  cancelButtonColor: '#d33',
-                  confirmButtonText: 'Si, bórralo!'
-              })
-              .then((aceptar)=>{
-                  if (aceptar.value) {
-                      axios.get('http://localhost/gha/api/crud/eliminarCateAula.php?id=' + id )
-                      .then((res) =>{
-                          if (res.data.trim() == 'success') {
-                              swal.fire('Categoria eliminada', '', 'success')
-                              location.href = '../principal/aulas.php'
-                          }else{
-                              swal.fire('Categoria no eliminada', '', 'fail')
-                          }
-                      })
-                  }else{
-                      return false
-                  }
-              })
-          },
+        eliminarCateAula(id){
+            this.eliminar(
+            'Al eliminarlo no podras recuperarlo',
+            'http://localhost/gha/api/crud/eliminarCateAula.php?id=' + id,
+            'Categoria eliminada',
+            'Categoria no eliminada',
+            '../principal/aulas.php'
+            );
+        },
         eliminarAula(id){
-            swal.fire({
-                title:'Seguro de eliminar?',
-                text:'Al eliminarlo no podras recuperarlo',
-                icon:'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Si, bórralo!'
-              })
-            .then((aceptar)=>{
-                if (aceptar.value) {
-                    axios.get('http://localhost/gha/api/crud/eliminarAula.php?id=' + id )
-                    .then((res) =>{
-                        if (res.data.trim() == 'success') {
-                            swal.fire('Categoria eliminada', '', 'success')
-                            location.href = '../principal/aulas.php'
-                        }else{
-                            swal.fire('Categoria no eliminada', '', 'fail')
-                        }
-                    })
-                }else{
-                    return false
-                }
-            })        
+          this.eliminar(
+            'Al eliminarlo no podrá recuperarlo',
+            'http://localhost/gha/api/crud/eliminarAula.php?id=' + id ,
+            'Categoria eliminada',
+            'Categoria no eliminada',
+            '../principal/aulas.php'
+          );
         },
-        registroAula() {
-
-          const form = document.getElementById("formAula");
-         
-          axios
-            .post("../api/Registro/aula.php", new FormData(form))
-            .then((res) => {
-              this.respuesta = res.data
-
-                if (this.respuesta.trim() == "success") {
-
-                    swal.fire('Aula registrado', '', 'success')
-                    this.getAulas();
-                    location.href = '../principal/aulas.php'
-
-                } else {
-
-                    swal.fire('Error al registrar aula', '', 'fail')    
-                }
-            })                  
-        },
-        
         eliminarTitulo(id){
+            this.eliminar( 
+              'Al eliminarlo no podrá recuperarlo',
+                'http://localhost/gha/api/crud/eliminarTitulo.php?id=' + id,
+                'Tìtulo eliminado',
+                'Título no eliminado',
+                "../principal/asignatura.php"
+                );
+          },
+          eliminar($texto, $uri, $mensajeOk, $mensajeFallo, $archivoOk){
             swal.fire({
-                title:'Seguro que deseas eliminar el registro',
-                text:'Al eliminarlo no podras recuperarlo',
-                icon:'warning',
-                buttons:true,
-                dangerMode:true,
+              title:'Seguro de eliminar el registro?',
+              text: $texto,
+              icon:'warning',
+              buttons:true,
+              dangerMode:true,
             })
             .then((aceptar)=>{
-                if (aceptar) {
-                    axios.get('http://localhost/gha/api/crud/eliminarTitulo.php?id=' + id )
-                    .then(res =>{
-                     if (res.data.trim() == 'success') {
-                         swal.fire('Tìtulo eliminado')
-                         location.href = '../principal/asignatura.php'
-                     }else{
-                        swal.fire('Título no eliminado')
-                     }
-                    })
-                }else{
-                    return false
-                }
-            })
+              if (aceptar) {
+                  axios.get($uri)
+                  .then(res =>{
+                   if (res.data.trim() == 'success') {
+                       swal.fire($mensajeOk)
+                       location.href = $archivoOk
+                   }else{
+                      swal.fire($mensajeFallo)
+                   }})
+            }})          
           },
           eliminarAsignatura(id, codigo){
-            swal.fire({
-                title:'Seguro que deseas eliminar el registro',
-                text:'Al eliminarlo no podras recuperarlo',
-                icon:'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Si, bórralo!'
-            })
-            .then((aceptar)=>{
-                if (aceptar.value) {
-                    axios.get('http://localhost/gha/api/crud/eliminarAsignatura.php?id=' + id +'&codigo='+ codigo)
-                    .then((res) =>{
-                      this.respuesta= res.data
-                        if (this.respuesta.trim() == 'success') {
-                          
-                            swal.fire('Asignatura eliminada', ' ', 'success')
-                            location.href = '../principal/buscarAsig.php'
-                           
-                        }else{
-                            swal.fire('Falló', 'Asignatura no eliminado', 'fail')
-                        }
-                    })
-                }else{
-                    return false
-                }
-            })
+            this.eliminar(
+              'Al eliminarlo no podrá recuperarlo',
+             'http://localhost/gha/api/crud/eliminarAsignatura.php?id=' + id +'&codigo='+ codigo,
+             'Asignatura eliminada',
+             'Asignatura no eliminado',
+             '../principal/buscarAsig.php'
+             );
           },
           eliminarTramo(id){
-            swal.fire({
-                title:'Seguro que deseas eliminar el registro',
-                text:'Al eliminarlo no podras recuperarlo',
-                icon:'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Si, bórralo!'
-            })
-            .then((aceptar)=>{
-                if (aceptar.value) {
-                    axios.get('http://localhost/gha/api/crud/eliminarTramo.php?id=' + id )
-                    .then((res) =>{
-                     if (res.data.trim() == 'success') {
-                         swal.fire('Eliminado', '', 'success')
-                         location.href = '../principal/tramos.php'
-                      
-                     }else{
-                        swal.fire('Falló','Tramo no eliminado', 'fail')
-                     }
-                    })
-                }else{
-                    return false
-                }
-            })
-          },
-          registroGrupo() {
-
-            const form = document.getElementById("formGrupo");
-           
-            axios
-              .post("../api/Registro/grupo.php", new FormData(form))
-              .then((res) => {
-                this.respuesta = res.data
-  
-                  if (this.respuesta.trim() == "success") {
-  
-                      swal.fire('Grupo registrado', '', 'success')
-                      location.href = '../principal/grupos.php'
-  
-                  } else {
-  
-                      swal.fire('Error al registrar grupo', '', 'fail')    
-                  }
-              })                  
-          },
-          registroTramo() {
-
-            if(this.validaTramos()){
-                const form = document.getElementById("formTramo");           
-                axios
-                  .post("../api/Registro/tramo.php", new FormData(form))
-                  .then((res) => {
-                    this.respuesta = res.data
-      
-                      if (this.respuesta.trim() == "success") {
-      
-                          swal.fire('Tramo registrado', '', 'success')
-                          location.href = '../principal/tramos.php'
-      
-                      } else {
-      
-                          swal.fire('Error al registrar tramo', 'Revicelo e intente nuevamente', 'fail')    
-                      }
-                  })               
-            }  
-          },
-          getSesiones(){
-            axios
-            .get("http://localhost/gha/api/crud/getSesion.php")
-            .then((res) => {
-                this.sequeda = res.data;
-                console.log('esto trae:'+this.sequeda)
-            });             
-           },
-        
-           RegistroGrupoAsignaAsi(){
-
-            const form = document.getElementById("formGrupoAsigna");
-           
-            axios
-              .post("../api/Registro/gruposasigna.php", new FormData(form))
-              .then((res) => {
-                this.respuesta = res.data
-  
-                  if (this.respuesta.trim() == "success") {
-  
-                      swal.fire('Asignación registrada', '', 'success')
-                      location.href = '../principal/gruposasigna.php'
-  
-                  } else {
-  
-                      swal.fire('Error al registrar asignación', '', 'fail')    
-                  }
-              })             
-          },
+            this.eliminar(
+              'Al eliminarlo no podrá recuperarlo',
+            'http://localhost/gha/api/crud/eliminarTramo.php?id=' + id,
+            'Tramo eliminado',
+            'Tramo no eliminado',
+            '../principal/tramos.php'
+            );
+          },        
           eliminarAsignaG(id){
-              swal.fire({
-                  title:'Seguro que deseas eliminar el registro',
-                  text:'Al eliminarlo no podras recuperarlo',
-                  icon:'warning',
-                  showCancelButton: true,
-                  confirmButtonColor: '#3085d6',
-                  cancelButtonColor: '#d33',
-                 confirmButtonText: 'Si, bórralo!'
-              })
-              .then((aceptar)=>{
-                  if (aceptar.value) {
-                      axios.get('http://localhost/gha/api/crud/eliminargrupoasigna.php?id=' + id )
-                      .then(res =>{
-                      if (res.data.trim() == 'success') {
-                          swal.fire('Asignación eliminada')
-                          location.href = '../principal/gruposasigna.php'
-                      }else{
-                          swal.fire('Asignación no eliminada', '', 'fail')
-                      }
-                      })
-                  }else{
-                      return false
-                  }
-              })       
-          },
-
-          RegistroProfeAsignaAsi(){
-            const form = document.getElementById("formProfeAsigna");
-           
-            axios
-              .post("../api/Registro/profesasigna.php", new FormData(form))
-              .then((res) => {
-                this.respuesta = res.data
-  
-                  if (this.respuesta.trim() == "success") {
-  
-                      swal.fire('Asignación registrada', '', 'success')
-                      location.href = '../principal/profeasigna.php'
-  
-                  } else {
-  
-                      swal.fire('Error al registrar asignación', '', 'fail')    
-                  }
-              })             
-
-
+            this.eliminar(
+              'Al eliminarlo no podrá recuperarlo',
+              'http://localhost/gha/api/crud/eliminargrupoasigna.php?id=' + id,
+              'Asignación eliminada',
+              'Asignación no eliminada',
+              '../principal/gruposasigna.php'
+            );
           },
           eliminarAsignaP(id){
-            swal.fire({
-                title:'Seguro que deseas eliminar el registro',
-                text:'Al eliminarlo no podras recuperarlo',
-                icon:'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-               confirmButtonText: 'Si, bórralo!'
-            })
-            .then((aceptar)=>{
-                if (aceptar.value) {
-                    axios.get('http://localhost/gha/api/crud/eliminarProfeAsig.php?id=' + id )
-                    .then(res =>{
-                        if (res.data.trim() == 'success') {
-                            swal.fire('Asignación eliminada')
-                            location.href = '../principal/profeasigna.php'
-                        }else{
-                            swal.fire('Asignación no eliminada');
-                        }
-                    })
-                }else{
-                    return false
-                }
-            })                   
+            this.eliminar(
+              'Al eliminarlo no podrá recuperarlo',
+              'http://localhost/gha/api/crud/eliminarProfeAsig.php?id=' + id ,
+              'Asignación eliminada',
+              'Asignación no eliminada',
+              '../principal/profeasigna.php'
+            );              
           },
+          // Eliminar usuarios
           eliminarProfe($idProfe){
-
-            swal.fire({
-              title: 'Esta seguro?',
-              text: "No podras revertir esto!",
-              icon: 'warning',
-              showCancelButton: true,
-              confirmButtonColor: '#3085d6',
-              cancelButtonColor: '#d33',
-              confirmButtonText: 'Si, bórralo!'
-              }).then((result) => {
-                    if (result.value) {
-                        axios.get('http://localhost/gha/api/crud/eliminarUsuario.php?id=' + $idProfe )
-                        .then((res) => {
-                            if (res.data.trim() == 'success') {
-                              Swal.fire('Borrado!', 'El profesor ha sido eliminado.', 'success')                            
-                              location.href = '../principal/buscar.php'
-                            }else{
-                                Swal.fire('Falló!', 'No se pudo eliminar', 'fail')                            
-                            }
-                        }); 
-                    }
-              });
+            this.eliminar(
+             'Al eliminarlo no podrá recuperarlo',
+            'http://localhost/gha/api/crud/eliminarUsuario.php?id=' + $idProfe,
+            'El profesor ha sido eliminado.',
+            'No se pudo eliminar',
+            '../principal/buscar.php'
+            );
           },
+          
           eliminarGrupo($idGrupo){
-            swal.fire({
-              title: 'Esta seguro?',
-              text: "No podras revertir esto!, tambien se borraran todas sus sesiones registradas",
-              icon: 'warning',
-              showCancelButton: true,
-              confirmButtonColor: '#3085d6',
-              cancelButtonColor: '#d33',
-              confirmButtonText: 'Si, bórralo!'
-              }).then((result) => {
-                    if (result.value) {
-                        axios.get('http://localhost/gha/api/crud/eliminarGrupo.php?id=' + $idGrupo )
-                        .then((res) => {
-                            if (res.data.trim() == 'success') {
-                              Swal.fire('Borrado!', 'El grupo ha sido eliminado.', 'success')                            
-                              location.href = '../principal/grupos.php'
-                            }else{
-                                Swal.fire('Falló!', 'No se pudo eliminar', 'fail')                            
-                            }
-                        }); 
-                    }
-              });
+            this.eliminar(
+            'tambien se borraran todas sus sesiones registradas',
+            'http://localhost/gha/api/crud/eliminarGrupo.php?id=' + $idGrupo,
+            'El grupo ha sido eliminado.',
+            'No se pudo eliminar',
+            '../principal/grupos.php'
+            );
           },
           validaTramos(){
             if(this.inicio<this.fin){
@@ -642,8 +389,7 @@ const app = new Vue({
             }else{
               swal.fire('Horas no válidas', 'Hora fin debe ser mayor a hora inicio', 'fail')
             }
-        }
-   
+        } 
     }
 })
 
@@ -651,8 +397,3 @@ $("#menu-toggle").click(function(e) {
   e.preventDefault();
   $("#wrapper").toggleClass("toggled");
 });
-
-
-
-
-

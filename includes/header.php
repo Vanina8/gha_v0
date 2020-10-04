@@ -7,7 +7,7 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <title>Gestión Horarios Académicos</title>
   <!-- MDB icon -->
-  <link rel="icon" href="../api/MDB-Free_4.17.0/img/mdb-favicon.ico" type="image/x-icon">
+  <link rel="icon" href="../api/MDB-Free_4.17.0/img/agha.ico" type="image/x-icon">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
   <!-- Google Fonts Roboto -->

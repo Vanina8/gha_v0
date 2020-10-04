@@ -1,24 +1,22 @@
 const app = new Vue({
   el: "#app",
   data: {
+    usuario:5,
     pass: "",
     passC: "",
-    respuesta: "",
-    boton: "btn blue",
-    menu: false,
     estadoEti: false,
     etiquetaEstadoA: "Activo",
     etiquetaEstadoB: "Inactivo",
-    inicio: false,
     correo:'',
-    roles:[],
-    selectedRol:'',
-    listarUsu:[],
     dni:'',
-    usuario:5
+    selectedRol:'',
 
- 
-
+    respuesta: "",
+    // boton: "btn blue",
+    // menu: false,
+    // inicio: false,
+    roles:[],
+    listarUsu:[]
   },
   created(){
     this.autorizamenu()
@@ -62,13 +60,14 @@ const app = new Vue({
       })
     },
 
+// Registro nuevo usuario ***********************////
     registro() {
 
-      if (this.pass == this.passC ) {
-      
-        if(!(this.dniProfeFiltrado().length>0)){
+      pass=this.validaPass();
+      dni=this.validaDNI();
+      email=this.validaCorreo();
 
-          if(!(this.correoProfeFiltrado().length>0)){
+      if( pass && dni && email){
 
             const form = document.getElementById("formRegistro")
             axios
@@ -77,16 +76,28 @@ const app = new Vue({
                 this.respuesta = res.data
                 this.direccionamiento()
               })
-            }else{
-              swal.fire("E-mail "+this.correo+" ya existe", " Debe ser dato único", "fail");
-            }          
-        }else{
-          swal.fire("DNI "+this.dni+" ya existe", " Debe ser dato único", "fail");
-        }
-      } else {
+      }
+      if(!pass) {
         swal.fire("los passwords no son iguales", "", "fail");
       }
+      if(!dni){
+        swal.fire("DNI "+this.dni+" ya existe", " Debe ser dato único", "fail");
+      }
+      if(!email){
+        swal.fire("E-mail "+this.correo+" ya existe", " Debe ser dato único", "fail");
+      }
     },
+    // Validaciones del registro de usuario //
+    validaPass(){
+      return this.pass== this.passC;
+    },
+    validaDNI(){
+      return !(this.dniProfeFiltrado().length>0);
+    },
+    validaCorreo(){
+      return !(this.correoProfeFiltrado().length>0);
+    },
+    // Fin Vaidaciones del registro de usuario //
     direccionamiento() {
       if (this.respuesta.trim() == "success") {
         swal.fire("Registrado", "", "success")
@@ -95,42 +106,38 @@ const app = new Vue({
         swal.fire("No se pudo registrar", "llame a soporte técnico", "fail")
       }
     },
+// Fin Registro nuevo usuario ***********************////
     login(){
-        console.log("Hola estoy en login")
-            const form = document.getElementById('inicioSesion')
-            axios.post('../api/login/login.php', new FormData(form))
-            .then( res =>{
-            this.respuesta = res.data
-            if (res.data == 'success') {        
-
-                console.log('estoy regresando de login'+res.data)
-                 location.href = '../principal'
-            } else {
-                swal.fire('Usuario y/o contraseña incorrectos')
-            }
-                
-            })
-        },
-        registroRol(){
-          const form = document.getElementById("formRol");
-         
-          axios
-            .post("../api/Registro/rol.php", new FormData(form))
-            .then((res) => {
-              this.respuesta = res.data
-
-                if (this.respuesta.trim() == "success") {
-
-                    swal.fire('Rol registrado', '', 'success')
-                    location.href = '../principal/registro.php'
+        const form = document.getElementById('inicioSesion')
+        axios.post('../api/login/login.php', new FormData(form))
+             .then( res =>{
+             this.respuesta = res.data
+                if (res.data == 'success') {        
+                  location.href = '../principal'
                 } else {
-
-                    swal.fire('Error al registrar rol', '', 'fail')    
-                }
-            })     
-        }
-
+                  swal.fire('Usuario y/o contraseña incorrectos')
+                }                
+            })
     }
+    // registroRol(){
+    //     const form = document.getElementById("formRol");
+         
+    //     axios
+    //       .post("../api/Registro/rol.php", new FormData(form))
+    //       .then((res) => {
+    //         this.respuesta = res.data
+
+    //           if (this.respuesta.trim() == "success") {
+
+    //               swal.fire('Rol registrado', '', 'success')
+    //               location.href = '../principal/registro.php'
+    //           } else {
+
+    //               swal.fire('Error al registrar rol', '', 'fail')    
+    //           }
+    //       })     
+    // }
+  }
 })
 $("#menu-toggle").click(function(e) {
   e.preventDefault();

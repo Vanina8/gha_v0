@@ -1,20 +1,15 @@
-
 <?php   include '../includes/header.php';
 @session_start();
 include "../includes/menucompleto.php";
 ?>
-
-
 <div class="row container-fluid">
     <div class=" col-5 pt-5 pl-5"  data-background-color="green-dark">
 
-        <!-- Material form register -->
-
         <div class="card">
-
                 <h5 class=" info-color white-text text-center py-4">
                     <strong>Registro de Asignaturas</strong>
                 </h5>
+
                 <!--Card content-->
                 <div class="card-body px-lg-5 pt-0">
 
@@ -54,7 +49,7 @@ include "../includes/menucompleto.php";
                         </div>
 
                         <div class="form-row container-fluid justify-content-center">
-                        <!-- Estado name -->
+                        <!-- Estado  -->
                             <div class="row d-flex col-7 ">      
                                 <div class="md-form  pb-1 mb-0 col-4 justify-content-center col-6">
                                         <label for="defaultInline1" class="pl-2 ml-0 justify-content-center ">Estado</label>  
@@ -70,24 +65,18 @@ include "../includes/menucompleto.php";
                                 </div>       
                             </div>
                          </div>
-                        <!-- Sign up button -->
+                        <!-- Enviar -->
                         <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect " type="submit">Guardar</button>
                         <hr>
                     </form>
                     <!-- Form -->
-
-                 
                 </div>
         </div>
-        <!-- Material form register -->
-
     </div>
     <div class="col-2">
-
     </div>
-    
+    <!-- Gestio de Títulos -->
     <div class="col-5 pt-5 pr-5"  data-background-color="green-dark">
-
         <!--Navbar-->
         <div  class="card info-color white-text">
 
@@ -109,28 +98,18 @@ include "../includes/menucompleto.php";
                 <tr  v-for="item in titulos">
                     <td>{{item.id}}</td><td>{{item.nombre}}</td><td>{{item.curso}}</td>
                     <td>						
-                    <!-- <a href='' class='btn btn-warning btn-sm'><i class="fas fa-pen"></i></a>  -->
-                    <a class='btn btn-danger btn-sm' href="#" @click="eliminarTitulo(item.id)"><i class="fas fa-trash"></i></a>
+                        <a class='btn btn-danger btn-sm' href="#" @click="eliminarTitulo(item.id)"><i class="fas fa-trash"></i></a>
                     </td>
                 </tr>
-               
-            
         </table>
-     
     </div>
-        <!-- Card -->
  </div>
 
-<!-- Modal nuevo titulo -->
-
-<!-- Modal -->
+<!-- Modal nuevo Titulo -->
 <div class="modal fade" id="modalNuevoTitulo" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
   aria-hidden="true">
 
-  <!-- Add .modal-dialog-centered to .modal-dialog to vertically center the modal -->
   <div class="modal-dialog modal-dialog-centered" role="document">
-
-
     <div class="modal-content">
 
     <!-- Form -->
@@ -140,7 +119,7 @@ include "../includes/menucompleto.php";
                 <h5 class="modal-title" id="exampleModalLongTitle">Nueva titulación</h5>
 
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
+                    <span aria-hidden="true">&times;</span>
                 </button>
             </div>
 
@@ -151,11 +130,9 @@ include "../includes/menucompleto.php";
                                 <input type="text" id="materialRegisterFormEmail" required class="form-control" name="nombre" value="">
                                 <label for="materialRegisterFormEmail">Nombre</label>
                             </div>
-                        </div>
-                    
+                        </div>                    
                         <div class="form-row">                
                             <div class="md-form col-6 container-fluid">
-                                <!-- <input type="text"  class="form-control" required name="curso" value=""> -->
                                 <label for="materialRegisterFormEmail">Curso</label>
                                 <select v-model="selectedYear" name="curso" >
                                         <option v-for="optionyear in years" v-bind:value="optionyear">
@@ -163,26 +140,19 @@ include "../includes/menucompleto.php";
                                         </option>
                                 </select>
                                 <span> {{ selectedYear }}</span>
-
                             </div>
                         </div>
-
             </div>
-
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
-                <button type="submit" class="btn btn-primary" >Gruardar cambios</button>
+                <button type="submit" class="btn btn-primary" >Guardar cambios</button>
             </div>
-
     </from>
-
     </div>
   </div>
 </div>
 
 <!-- Fin modal nuevo titulo -->
-
-
 <?php
         include "../includes/footer.php";
 ?>

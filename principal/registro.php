@@ -1,10 +1,7 @@
-
 <?php 
-
 include '../includes/header.php';
 @session_start();
 include "../includes/menucompleto.php";
-
 ?>
 
 <div class="container-fluid col-12 pt-3 row justify-content-center">
@@ -77,8 +74,7 @@ include "../includes/menucompleto.php";
                         <div class="md-form">
                             <input type="text" id="materialRegisterFormDNI" class="form-control" aria-describedby="materialRegisterFormPhoneHelpBlock" name="dni" v-model='dni'>
                             <label for="materialRegisterFormDNI">DNI</label>
-                            <small id="materialRegisterFormPhoneHelpBlock" class="form-text text-muted mb-4">
-                            
+                            <small id="materialRegisterFormPhoneHelpBlock" class="form-text text-muted mb-4">                            
                             </small>
                         </div>
                     </div>
@@ -90,8 +86,7 @@ include "../includes/menucompleto.php";
                             <small id="materialRegisterFormPhoneHelpBlock" class="form-text text-muted mb-4">
                                 Opcional
                             </small>
-                        </div>
-                     
+                        </div>                     
                     </div>
                 </div>
                 <!-- Estado name -->
@@ -135,8 +130,8 @@ include "../includes/menucompleto.php";
                                     <span class="input-group-text" id="inputGroupFileAddon01">Imagen del usuario</span>
                                 </div>
                                 <div class="custom-file">
-                                    <input type="file" class="custom-file-input" id="inputGroupFile01" name='foto' aria-describedby="inputGroupFileAddon01">
-                                    <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                                    <input type="file" class="custom-file-input" id="inputGroupFile01" name='foto' aria-describedby="inputGroupFileAddon01" accept="image/*,.jpg, .png">
+                                    <label class="custom-file-label" for="inputGroupFile01">Elija Archivo</label>
                                 </div>
                                
                             </div>
