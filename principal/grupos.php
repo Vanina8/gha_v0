@@ -58,7 +58,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
-                    <button type="submit" class="btn btn-primary" >Gruardar grupo</button>
+                    <button type="submit" class="btn btn-primary" >Guardar grupo</button>
                 </div>
         </from>
     </div>

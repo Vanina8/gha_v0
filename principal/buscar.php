@@ -8,7 +8,6 @@ include "../includes/menucompleto.php";
         <div class="form-inline active-cyan-3 active-cyan-4 px-2 pt-4">                              
             <label for="" class="pr-2">Buscando Usuarios</label>
             <input class="form-control" type="text" placeholder="Search" aria-label="Search" v-model="buscar">
-            <!-- <button class="btn  blue-gradient btn-md my-2 my-sm-0 ml-3" type="submit">Search</button> -->
         </div>
     </nav>
 <!--/.Navbar-->

@@ -3,8 +3,6 @@
 include "../includes/menucompleto.php";
 ?>
 
-
-
 <!-- Navbar-->
 <nav class="navbar navbar-light">
     <form   class="form-inline active-cyan-3 active-cyan-4 px-2 pt-4"  style="color: #757575;"  id="formNuevaSesion" autocomplete="off" @submit.prevent="registraSesion">                              
@@ -159,21 +157,15 @@ include "../includes/menucompleto.php";
     <h4 class='col-2'>Desocupado:</h4><div class='col-1'><button class="btn btn-info"></button></div>
     <h4 class='col-2'>Elegido:</h4><div class='col-1'><button class="btn btn-danger"></button></div>
 </div>
-
-
 </div>
-
 
 
 <!-- Modal nuevo titulo -->
 
 <!-- Modal -->
-<!-- <div class="modal fade" id="modalVisualiza" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-  aria-hidden="true"> -->
 <div class="modal fade" id="modalVisualiza"  aria-labelledby="exampleModalCenterTitle"
   aria-hidden="true">
 
-  <!-- Add .modal-dialog-centered to .modal-dialog to vertically center the modal -->
   <div class=" modal-dialog  modal-xl modal-dialog-centered col-10" role="document">
     <div class="modal-content">
     <!-- Form -->
@@ -222,9 +214,7 @@ include "../includes/menucompleto.php";
                                         <div  class="p-3 "  >                                                    
                                            <h6> {{item.inicio}} - {{item.fin}}</h6>
                                         </div>
-                                    </div>
-                                    
-                                                                                                                    
+                                    </div>                                                                                                                                                        
                                     <div class='col-2 text-center p-0 m-0'>
                                         <div class='cambioColor11 espacio rounded-lg' :id="'L'+index">
                                         </div>
@@ -244,28 +234,19 @@ include "../includes/menucompleto.php";
                                     <div class='col-2 text-center p-0 m-0'>
                                         <div class='cambioColor55 espacio rounded-lg' :id="'V'+index">
                                         </div>
-
-                                    </div>
-
-                                    
+                                    </div>                                    
                             </div>
 
                        </div>
             </div>
-
             </div>
-
             <div class="modal-footer justify-content-center">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
             </div>
-
     </from>
-
     </div>
   </div>
 </div>
-
-
 <?php
         include "../includes/footerSesion.php";
 ?>

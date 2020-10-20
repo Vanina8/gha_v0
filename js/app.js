@@ -312,11 +312,13 @@ const app = new Vue({
               title:'Seguro de eliminar el registro?',
               text: $texto,
               icon:'warning',
-              buttons:true,
-              dangerMode:true,
+              showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Si, bórralo!'
             })
             .then((aceptar)=>{
-              if (aceptar) {
+              if (aceptar.value) {
                   axios.get($uri)
                   .then(res =>{
                    if (res.data.trim() == 'success') {
@@ -376,7 +378,7 @@ const app = new Vue({
           
           eliminarGrupo($idGrupo){
             this.eliminar(
-            'tambien se borraran todas sus sesiones registradas',
+            'tambien se borrarán todas sus sesiones registradas',
             'http://localhost/gha/api/crud/eliminarGrupo.php?id=' + $idGrupo,
             'El grupo ha sido eliminado.',
             'No se pudo eliminar',

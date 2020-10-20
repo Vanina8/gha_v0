@@ -2,8 +2,6 @@
 @session_start();
 include "../includes/menucompleto.php";
 ?>
-
-
 <div class="row container-fluid d-flex justify-content-center">
 
 <div class="card col-5 mt-5" >  
@@ -43,7 +41,6 @@ include "../includes/menucompleto.php";
 <div class="modal fade" id="modalTramo" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
   aria-hidden="true">
 
-  <!-- Add .modal-dialog-centered to .modal-dialog to vertically center the modal -->
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
     <!-- Form -->
@@ -64,24 +61,18 @@ include "../includes/menucompleto.php";
                             <div class="md-form md-outline input-with-post-icon timepicker" darktheme="true">
                                 <input type="time" id="set-dark-theme" class="form-control" placeholder="Select time" name="inicio" v-model='inicio'>
                                 <label for="set-dark-theme">Inicio</label>
-                                <!-- <i class="fas fa-envelope  input-prefix"></i> -->
                             </div>
                             <div class="md-form md-outline input-with-post-icon timepicker" darktheme="true">
                                 <input type="time" id="set-dark-theme" class="form-control" placeholder="Select time" name="fin" v-model='fin'>
                                 <label for="set-dark-theme">Fin</label>
-                                <!-- <i class="fas fa-envelope  input-prefix"></i> -->
                             </div>
                         </div>
-                    
-                 
-
             </div>
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
-                <button type="submit" class="btn btn-primary" >Gruardar cambios</button>
+                <button type="submit" class="btn btn-primary" >Guardar cambios</button>
             </div>
-
     </from>
 
     </div>

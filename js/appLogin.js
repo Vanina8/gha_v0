@@ -10,11 +10,7 @@ const app = new Vue({
     correo:'',
     dni:'',
     selectedRol:'',
-
     respuesta: "",
-    // boton: "btn blue",
-    // menu: false,
-    // inicio: false,
     roles:[],
     listarUsu:[]
   },
@@ -25,17 +21,12 @@ const app = new Vue({
   },
   
   methods:{
-
     autorizamenu(){
-      console.log('estoy en autorizacion usuairo');
           axios.get('http://localhost/gha/api/getRol.php')
           .then(res =>{                    
             this.usuario = res.data             
-
-            console.log('rol de usuario es:'+this.usuario);
           })
      },
-
     getUsuarios(){
       axios.get('http://localhost/gha/api/crud/getUsuarios.php')
       .then(res =>{                    
@@ -118,25 +109,7 @@ const app = new Vue({
                   swal.fire('Usuario y/o contraseña incorrectos')
                 }                
             })
-    }
-    // registroRol(){
-    //     const form = document.getElementById("formRol");
-         
-    //     axios
-    //       .post("../api/Registro/rol.php", new FormData(form))
-    //       .then((res) => {
-    //         this.respuesta = res.data
-
-    //           if (this.respuesta.trim() == "success") {
-
-    //               swal.fire('Rol registrado', '', 'success')
-    //               location.href = '../principal/registro.php'
-    //           } else {
-
-    //               swal.fire('Error al registrar rol', '', 'fail')    
-    //           }
-    //       })     
-    // }
+    }   
   }
 })
 $("#menu-toggle").click(function(e) {

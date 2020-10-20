@@ -5,11 +5,11 @@ include "../includes/menucompleto.php";
 
 <!--Navbar-->
     <nav class="navbar navbar-light">
-    <form class="form-inline active-cyan-3 active-cyan-4 px-2 pt-4" @submit.prevent="getAsignaturas()">                              
-        <label for="" class="pr-2">Buscando Asignaturas</label>
-        <input class="form-control" type="text" placeholder="Search" aria-label="Search" v-model="buscarAsig">
-        <button class="btn  blue-gradient btn-md my-2 my-sm-0 ml-3" type="submit">Search</button>
-    </form>
+        <div class="form-inline active-cyan-3 active-cyan-4 px-2 pt-4">                              
+            <label for="" class="pr-2">Buscando Asignaturas</label>
+            <input class="form-control" type="text" placeholder="Search" aria-label="Search" v-model="buscarAsig">
+            <!-- <button class="btn  blue-gradient btn-md my-2 my-sm-0 ml-3" type="submit">Search</button> -->
+        </div>
     </nav>
 <!--/.Navbar-->
 
@@ -30,7 +30,6 @@ include "../includes/menucompleto.php";
                                 <td>
                                     <!-- Subtitle -->
                                     <h5 class="blue-text pb-2 text-center" ><strong>{{item.estado}}</strong></h5>
-                                    <!-- <h5 class="blue-text pb-2 text-center" v-if="item.estado==0"><strong>{{etiquetaEstadoB}}</strong></h5> -->
                                 </td>
                                 <td>						
                                     <a class='btn btn-danger btn-sm' href="#" @click="eliminarAsignatura(item.id, item.codigo)"><i class="fas fa-trash"></i></a>

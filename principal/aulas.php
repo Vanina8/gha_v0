@@ -150,7 +150,7 @@
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
-                <button type="submit" class="btn btn-primary" >Gruardar categoria</button>
+                <button type="submit" class="btn btn-primary" >Guardar categoria</button>
             </div>
     </from>
     </div>
